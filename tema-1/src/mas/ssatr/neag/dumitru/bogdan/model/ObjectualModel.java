@@ -2,37 +2,30 @@ package mas.ssatr.neag.dumitru.bogdan.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.RecursiveTask;
 
 /**
  * author: Bogdan
  */
 public class ObjectualModel {
 
-    private String id;
-    private List<String> input = new ArrayList<String>();
-    private List<String> output = new ArrayList<String>();
+    private List<Location> locations;
+    private List<Transition> transitions;
 
-    public String getId() {
-        return id;
+    public void addLocation(Location l) {
+        locations.add(l);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void addTranistion(Transition t) {
+        transitions.add(t);
     }
 
-    public List<String> getInput() {
-        return input;
+    public List<Location> getLocations() {
+        return locations;
     }
 
-    public void setInput(List<String> input) {
-        this.input = input;
+    public List<Transition> getTransitions() {
+        return transitions;
     }
 
-    public List<String> getOutput() {
-        return output;
-    }
-
-    public void setOutput(List<String> output) {
-        this.output = output;
-    }
 }

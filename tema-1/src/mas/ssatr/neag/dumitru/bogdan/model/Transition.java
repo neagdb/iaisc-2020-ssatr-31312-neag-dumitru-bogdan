@@ -1,19 +1,38 @@
 package mas.ssatr.neag.dumitru.bogdan.model;
 
+import java.util.List;
 import java.util.Random;
 
 /**
  * author: Bogdan
  */
-public class Transition extends ObjectualModel{
+public class Transition {
 
+    private String id;
     private int minT;
     private int maxT;
-    private int delay;
-    private int temopToken;
+    private List<String>inputLocation;
+    private List<String>outputLocation;
+    private int duration;
 
-    public Transition(){
-        delay = 0;
+    public Transition() {
+    }
+
+    public Transition(String id, int minT, int maxT, List<String> inputLocation, List<String> outputLocation, int duration) {
+        this.id = id;
+        this.minT = minT;
+        this.maxT = maxT;
+        this.inputLocation = inputLocation;
+        this.outputLocation = outputLocation;
+        this.duration = duration;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getMinT() {
@@ -32,29 +51,28 @@ public class Transition extends ObjectualModel{
         this.maxT = maxT;
     }
 
-    public int getDelay() {
-        return delay;
+    public List<String> getInputLocation() {
+        return inputLocation;
     }
 
-    public void setDelay(int delay) {
-        if(minT == 0 && maxT == 0){
-            System.out.println(this.getId() + "has no delay!");
-        }else {
-            Random r = new Random();
-            delay = r.nextInt((maxT - minT) + 1) + minT;
-            System.out.println(this.getId() + " delay set to: " + delay);
-        }
+    public void setInputLocation(List<String> inputLocation) {
+        this.inputLocation = inputLocation;
     }
 
-    public int getTemopToken() {
-        return temopToken;
+    public List<String> getOutputLocation() {
+        return outputLocation;
     }
 
-    public void setTemopToken(int temopToken) {
-        this.temopToken = temopToken;
+    public void setOutputLocation(List<String> outputLocation) {
+        this.outputLocation = outputLocation;
     }
 
-    public void addTempToken(){
-        temopToken++;
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration() {
+        this.duration = (int)Math.random()*(maxT-minT)+minT;
+        System.out.println("Transition with id:" + id + " has " + duration + "T.U. duration");
     }
 }
