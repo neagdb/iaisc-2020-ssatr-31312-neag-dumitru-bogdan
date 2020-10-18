@@ -9,8 +9,8 @@ import java.util.concurrent.RecursiveTask;
  */
 public class ObjectualModel {
 
-    private List<Location> locations;
-    private List<Transition> transitions;
+    private List<Location> locations = new ArrayList<Location>();
+    private List<Transition> transitions = new ArrayList<Transition>();
 
     public void addLocation(Location l) {
         locations.add(l);
