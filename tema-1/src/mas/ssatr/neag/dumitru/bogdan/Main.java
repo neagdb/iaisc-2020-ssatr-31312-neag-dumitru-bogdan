@@ -2,6 +2,8 @@ package mas.ssatr.neag.dumitru.bogdan;
 
 import mas.ssatr.neag.dumitru.bogdan.loader.PetriNetLoader;
 import mas.ssatr.neag.dumitru.bogdan.model.Location;
+import mas.ssatr.neag.dumitru.bogdan.model.ObjectualModel;
+import mas.ssatr.neag.dumitru.bogdan.simulation.SimulationEngine;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,18 +18,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ParseException {
 
-//        Object object = new JSONParser().parse(new FileReader("src/mas/ssatr/neag/dumitru/bogdan/input/retea-petri.json"));
-//        JSONObject jo = (JSONObject) object;
-//        JSONObject jo2 = (JSONObject) jo.get("ReteaPetri");
-//
-//        JSONArray jsonArray = (JSONArray) jo2.get("Locatii");
-//        for (int i = 0; i < jsonArray.size(); i++) {
-//            jo = (JSONObject) jsonArray.get(i);
-//            System.out.println(jo.toString());
-//        }
-
-        PetriNetLoader petriNetLoader = new PetriNetLoader();
-        petriNetLoader.setFileName("src/mas/ssatr/neag/dumitru/bogdan/input/retea-petri.json");
+        PetriNetLoader petriNetLoader = new PetriNetLoader("src/mas/ssatr/neag/dumitru/bogdan/input/retea-petri.json");
         petriNetLoader.readPetriNet();
+        ObjectualModel objectualModel = petriNetLoader.getObjectualModel();
+        SimulationEngine simulationEngine = new SimulationEngine(objectualModel);
+        simulationEngine.seOutputFile("src/mas/ssatr/neag/dumitru/bogdan/output/simulation-result.txt");
+        simulationEngine.evaluate();
     }
 }

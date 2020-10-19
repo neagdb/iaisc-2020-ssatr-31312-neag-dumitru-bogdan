@@ -1,5 +1,10 @@
 package mas.ssatr.neag.dumitru.bogdan.model;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -11,8 +16,8 @@ public class Transition {
     private String id;
     private int minT;
     private int maxT;
-    private List<String>inputLocation;
-    private List<String>outputLocation;
+    private List<String> inputLocation;
+    private List<String> outputLocation;
     private int duration;
 
     public Transition() {
@@ -72,7 +77,32 @@ public class Transition {
     }
 
     public void setDuration() {
-        this.duration = (int)Math.random()*(maxT-minT)+minT;
+        this.duration = (int) ((Math.random() * (maxT - minT)) + minT);
         System.out.println("Transition with id:" + id + " has " + duration + "T.U. duration");
+    }
+
+    public Transition setTransition(JSONObject jsonObject) {
+        Transition transition = new Transition();
+        transition.setId(jsonObject.get("id").toString());
+        transition.setMinT(Integer.parseInt(jsonObject.get("minT").toString()));
+        transition.setMaxT(Integer.parseInt(jsonObject.get("maxT").toString()));
+
+        JSONArray inputArray = (JSONArray) jsonObject.get("in");
+        List<String> inputLocation = new ArrayList<String>();
+        Iterator<String> iterator = inputArray.iterator();
+        while (iterator.hasNext()) {
+            inputLocation.add(iterator.next());
+        }
+        transition.setInputLocation(inputLocation);
+
+        JSONArray outputArray = (JSONArray) jsonObject.get("out");
+        List<String> outputLocation = new ArrayList<String>();
+        iterator = outputArray.iterator();
+        while (iterator.hasNext()) {
+            outputLocation.add(iterator.next());
+        }
+        transition.setOutputLocation(outputLocation);
+
+        return transition;
     }
 }

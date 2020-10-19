@@ -10,9 +10,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 
 /**
@@ -21,90 +18,68 @@ import java.util.List;
 public class PetriNetLoader {
 
     private String fileName;
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
+    private ObjectualModel objectualModel = new ObjectualModel();
+    public PetriNetLoader(String fileName) {
         this.fileName = fileName;
     }
 
-    public void readPetriNet() {
+    public PetriNetLoader() {
+
+    }
+
+    public ObjectualModel getObjectualModel() {
+        return objectualModel;
+    }
+
+    public void readPetriNet() throws IOException, ParseException {
 
         JSONParser parser = new JSONParser();
-        ObjectualModel objectualModel = new ObjectualModel();
-        try {
-            Object object = parser.parse(new FileReader(fileName));
-            JSONObject jsonObject = (JSONObject) object;
+        Object object = parser.parse(new FileReader(fileName));
+        JSONObject jsonObject = (JSONObject) object;
+        JSONArray locationArray = (JSONArray) jsonObject.get("Locatii");
+        readLocation(jsonObject, locationArray);
+        JSONArray transitionArray = (JSONArray) jsonObject.get("Tranzitii");
+        readTransition(jsonObject, transitionArray);
 
-            JSONArray locationArray = (JSONArray) jsonObject.get("Locatii");
-            if (locationArray == null) {
-                System.out.println("Location array is null");
-            } else if (locationArray.isEmpty()) {
-                System.out.println("location array is empty");
-            } else {
-                Iterator<JSONObject> iterator = locationArray.iterator();
-                while (iterator.hasNext()) {
-                    jsonObject = iterator.next();
-                    objectualModel.addLocation(setLocation(jsonObject));
-                    System.out.println(jsonObject);
-                }
+
+    }
+
+    private void readTransition(JSONObject jsonObject, JSONArray transitionArray) {
+        if (jsonObject == null) {
+            System.out.println("JSON is null!");
+        } else if (transitionArray == null) {
+            System.out.println("Transition Array is null!");
+        } else if (transitionArray.isEmpty()) {
+            System.out.println("Transition Array is empty!");
+        } else {
+            System.out.println("\nTransitions:");
+            for (Object o : transitionArray) {
+                jsonObject = (JSONObject) o;
+                objectualModel.addTranistion(new Transition().setTransition(jsonObject));
+                System.out.println(jsonObject);
+
             }
+        }
+    }
 
+    private void readLocation(JSONObject jsonObject, JSONArray locationArray) {
 
-            JSONArray transitionArray = (JSONArray) jsonObject.get("Tranzitii");
-            if (transitionArray == null) {
-                System.out.println("Transition array is null");
-            } else if (transitionArray.isEmpty()) {
-                System.out.println("Transition array is empty");
-            } else {
-                Iterator<JSONObject> iterator = transitionArray.iterator();
-                while (iterator.hasNext()) {
-                    jsonObject = iterator.next();
-                    objectualModel.addTranistion(setTransition(jsonObject));
-                    System.out.println(jsonObject);
+        if(jsonObject == null){
+            System.out.println("JSON is null!");
+        }else if(locationArray == null){
+            System.out.println("Location Array is null!");
 
-                }
+        }else if(locationArray.isEmpty()){
+            System.out.println("Location Array is empty!");
+        }else {
+            System.out.println("Locations:");
+            for (Object o : locationArray) {
+                jsonObject = (JSONObject) o;
+                objectualModel.addLocation(new Location().setLocation(jsonObject));
+                System.out.println(jsonObject);
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
 
     }
-
-    private Location setLocation(JSONObject jsonObject) {
-        Location l = new Location();
-        return l;
-    }
-
-    public Transition setTransition(JSONObject jsonObject) {
-        Transition t = new Transition();
-        t.setId(jsonObject.get("id").toString());
-        t.setMinT(Integer.valueOf(jsonObject.get("minT").toString()));
-        t.setMaxT(Integer.valueOf(jsonObject.get("maxT").toString()));
-
-        JSONArray inputArray = (JSONArray) jsonObject.get("in");
-        List<String> inputList = new ArrayList<String>();
-        Iterator<String> iterator = inputArray.iterator();
-        while (iterator.hasNext()) {
-            inputList.add(iterator.next());
-        }
-        t.setInputLocation(inputList);
-
-        JSONArray outputArray = (JSONArray) jsonObject.get("out");
-        List<String> outputList = new ArrayList<String>();
-        iterator = outputArray.iterator();
-        while (iterator.hasNext()) {
-            outputList.add(iterator.next());
-        }
-        t.setOutputLocation(outputList);
-
-        return t;
-    }
-
 
 }
