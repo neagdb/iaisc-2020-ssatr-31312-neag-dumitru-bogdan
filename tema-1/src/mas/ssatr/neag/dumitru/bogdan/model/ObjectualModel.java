@@ -9,8 +9,9 @@ import java.util.concurrent.RecursiveTask;
  */
 public class ObjectualModel {
 
-    private List<Location> locations = new ArrayList<Location>();
-    private List<Transition> transitions = new ArrayList<Transition>();
+    private List<Location> locations = new ArrayList<>();
+    private List<Transition> transitions = new ArrayList<>();
+    private List<Integer> maxTimes = new ArrayList<>();
 
     public void addLocation(Location l) {
         locations.add(l);
@@ -28,5 +29,21 @@ public class ObjectualModel {
         return transitions;
     }
 
+    public Location findLocation(String id) {
+        for (Location location : locations) {
+            if (location.getId().equals(id)) {
+                return location;
+            }
+
+        }
+        return null;
+    }
+
+    public List<Integer> getMaxTimes() {
+        for (Transition transition : transitions) {
+            maxTimes.add(transition.getMaxT());
+        }
+        return maxTimes;
+    }
 
 }

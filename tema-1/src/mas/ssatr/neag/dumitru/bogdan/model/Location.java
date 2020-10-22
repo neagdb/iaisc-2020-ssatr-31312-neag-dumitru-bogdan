@@ -82,4 +82,12 @@ public class Location {
 
         return location;
     }
+
+    public void incJeton(){
+        jeton++;
+    }
+    public void decJeton(){
+        jeton--;
+    }
+
 }

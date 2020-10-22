@@ -19,6 +19,7 @@ public class PetriNetLoader {
 
     private String fileName;
     private ObjectualModel objectualModel = new ObjectualModel();
+
     public PetriNetLoader(String fileName) {
         this.fileName = fileName;
     }
@@ -64,14 +65,14 @@ public class PetriNetLoader {
 
     private void readLocation(JSONObject jsonObject, JSONArray locationArray) {
 
-        if(jsonObject == null){
+        if (jsonObject == null) {
             System.out.println("JSON is null!");
-        }else if(locationArray == null){
+        } else if (locationArray == null) {
             System.out.println("Location Array is null!");
 
-        }else if(locationArray.isEmpty()){
+        } else if (locationArray.isEmpty()) {
             System.out.println("Location Array is empty!");
-        }else {
+        } else {
             System.out.println("Locations:");
             for (Object o : locationArray) {
                 jsonObject = (JSONObject) o;

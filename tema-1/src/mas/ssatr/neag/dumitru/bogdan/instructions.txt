@@ -1,0 +1,24 @@
+Instructions:
+
+1. Clone/pull github repo https://github.com/NeagB/iaisc-2020-ssatr-31312-neag-dumitru-bogdan.
+2. Upload the project folder "tema-1" into your favorite IDE (e.g. Intellij IDEA).
+3. It is necessary to add the json-simple-1.1.jar library as external library.
+3. Modify the json (src/mas/ssatr/neag/dumitru/bogdan/input/retea-petri.json) file as you wish or leave it as it is.
+4. Run Main.java .
+5. See the output of the simulation in the .txt file (src/../output/simulation-result.txt).
+ The output file .txt has the following structure: Time (current time HH:MM:ss) and the PN mark (P0->token...Pn->token)
+
+Optional: simulation logic:
+
+call method evaluate(){
+
+	while(P.N. can be executed){
+		write the mark in the output file
+		check if any transition can be exuted -> if yes =>fire(){ take token from input location->  move token to the 									output location(s)}
+		if initial mark is reached OR worst case scenario has been reached => stop simulation
+								
+	}		
+}
+
+
+

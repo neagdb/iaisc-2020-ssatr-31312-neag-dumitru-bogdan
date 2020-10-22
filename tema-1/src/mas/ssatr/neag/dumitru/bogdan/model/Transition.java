@@ -6,7 +6,6 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  * author: Bogdan
@@ -19,6 +18,7 @@ public class Transition {
     private List<String> inputLocation;
     private List<String> outputLocation;
     private int duration;
+    private int jetonInTrans;
 
     public Transition() {
     }
@@ -104,5 +104,22 @@ public class Transition {
         transition.setOutputLocation(outputLocation);
 
         return transition;
+    }
+
+
+    public int getJetonInTrans() {
+        return jetonInTrans;
+    }
+
+    public void incJetonInTrans() {
+        jetonInTrans++;
+    }
+
+    public void decJetonInTrans() {
+        jetonInTrans--;
+    }
+
+    public void decDuration() {
+        duration--;
     }
 }
